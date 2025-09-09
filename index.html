@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoCharge Hub Locator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #0b3d91 0%, #1e88e5 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 24px;
+        }
+        
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        
+        nav a:hover {
+            opacity: 0.8;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+        }
+        
+        .btn-primary {
+            background: #43a047;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #388e3c;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero {
+            padding: 40px 0;
+            text-align: center;
+            background: white;
+        }
+        
+        .hero h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #0b3d91;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #555;
+        }
+        
+        .search-bar {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        
+        .search-bar button {
+            background: #1e88e5;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            cursor: pointer;
+        }
+        
+        .features {
+            padding: 60px 0;
+            background: #f1f8ff;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-family: 'Montserrat', sans-serif;
+            color: #0b3d91;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            background: #e3f2fd;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: #1e88e5;
+            font-size: 24px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .map-section {
+            padding: 60px 0;
+            background: white;
+        }
+        
+        .map-container {
+            height: 500px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: #e3f2fd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .map-placeholder {
+            text-align: center;
+            color: #0b3d91;
+        }
+        
+        .map-placeholder i {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .station-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .filter-btn.active {
+            background: #1e88e5;
+            color: white;
+            border-color: #1e88e5;
+        }
+        
+        .station-list {
+            margin-top: 40px;
+        }
+        
+        .station-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            gap: 20px;
+        }
+        
+        .station-status {
+            width: 12px;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+        
+        .status-available {
+            background: #4caf50;
+        }
+        
+        .status-occupied {
+            background: #f44336;
+        }
+        
+        .status-unknown {
+            background: #ff9800;
+        }
+        
+        .station-info h3 {
+            margin-bottom: 10px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .station-details {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .station-details i {
+            color: #1e88e5;
+        }
+        
+        .station-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .action-btn {
+            padding: 6px 12px;
+            background: #e3f2fd;
+            border: none;
+            border-radius: 4px;
+            color: #1e88e5;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+        
+        .predictive-alert {
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 12px 15px;
+            margin-top: 15px;
+            font-size: 14px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        footer {
+            background: #0b3d91;
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section a {
+            color: #bbdefb;
+            text-decoration: none;
+        }
+        
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 20px;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #1e88e5;
+            color: #bbdefb;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .station-card {
+                flex-direction: column;
+            }
+            
+            .station-status {
+                width: 100%;
+                height: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-charging-station"></i>
+                    <h1>EcoCharge Hub Locator</h1>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Map</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">About</a></li>
+                    </ul>
+                </nav>
+                
+                <!-- <div class="auth-buttons">
+                    <button class="btn btn-outline">Log In</button>
+                    <button class="btn btn-primary">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h2>Find EV Charging Stations with Confidence</h2>
+            <p>Real-time availability, AI-powered predictions, and crowd-sourced verification to eliminate charging anxiety.</p>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Enter your location or zip code">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">How EcoCharge Helps You</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Real-Time Status</h3>
+                    <p>See which charging stations are available, occupied, or out of service with live updates from other users.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI Predictions</h3>
+                    <p>Get predictions on when stations will become available based on historical usage patterns and real-time data.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h3>Trip Planning</h3>
+                    <p>Plan long trips with charging stops optimized for your vehicle's range and station availability.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Crowd-Sourced Verification</h3>
+                    <p>Contribute and benefit from a community of EV drivers reporting on station status and issues.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3>Cost Transparency</h3>
+                    <p>See exact pricing information including energy rates, parking fees, and idle fees before you arrive.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>Gamification</h3>
+                    <p>Earn points and badges for contributing accurate reports and helping other EV drivers.</p>
+                </div>
+            </div>
+        </div>
+    </section> -->
+    
+    
+    <!-- <section class="map-section">
+        <div class="container">
+            <h2 class="section-title">Find Charging Stations Near You</h2>
+            
+            <div class="station-filters">
+                <button class="filter-btn active">
+                    <i class="fas fa-bolt"></i> All Stations
+                </button>
+                <button class="filter-btn">
+                    <i class="fas fa-check-circle"></i> Available
+                </button>
+                <button class="filter-btn">
+                    <i class="fas fa-clock"></i> Fast Charging
+                </button>
+                <button class="filter-btn">
+                    <i class="fas fa-tag"></i> Free Parking
+                </button>
+            </div>
+            
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Interactive Map Would Appear Here</h3>
+                    <p>With real-time station locations and status indicators</p>
+                </div>
+            </div>
+            
+            <div class="station-list">
+                <h3>Nearby Charging Stations</h3>
+                
+                <div class="station-card">
+                    <div class="station-status status-available"></div>
+                    <div class="station-info">
+                        <h3>Downtown EV Hub</h3>
+                        <p>0.8 miles away • 8/10 plugs available</p>
+                        <div class="station-details">
+                            <span><i class="fas fa-bolt"></i> Fast Charging (150kW)</span>
+                            <span><i class="fas fa-dollar-sign"></i> $0.35/kWh</span>
+                            <span><i class="fas fa-clock"></i> $0.20/min idle after 5 min</span>
+                        </div>
+                        <div class="predictive-alert">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Usually busy on weekdays from 4-7 PM. Right now is a great time to charge!</span>
+                        </div>
+                        <div class="station-actions">
+                            <button class="action-btn"><i class="fas fa-directions"></i> Directions</button>
+                            <button class="action-btn"><i class="fas fa-check-circle"></i> Check In</button>
+                            <button class="action-btn"><i class="fas fa-comment"></i> Report Issue</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="station-card">
+                    <div class="station-status status-occupied"></div>
+                    <div class="station-info">
+                        <h3>Green Mall Charging Point</h3>
+                        <p>1.2 miles away • 2/6 plugs available</p>
+                        <div class="station-details">
+                            <span><i class="fas fa-bolt"></i> Standard Charging (50kW)</span>
+                            <span><i class="fas fa-dollar-sign"></i> $0.29/kWh</span>
+                            <span><i class="fas fa-clock"></i> Free parking while charging</span>
+                        </div>
+                        <div class="predictive-alert">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Predicted to have available spots in about 15 minutes based on current usage.</span>
+                        </div>
+                        <div class="station-actions">
+                            <button class="action-btn"><i class="fas fa-directions"></i> Directions</button>
+                            <button class="action-btn"><i class="fas fa-check-circle"></i> Check In</button>
+                            <button class="action-btn"><i class="fas fa-comment"></i> Report Issue</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="station-card">
+                    <div class="station-status status-unknown"></div>
+                    <div class="station-info">
+                        <h3>Tech Park Charging Station</h3>
+                        <p>2.3 miles away • Status unknown</p>
+                        <div class="station-details">
+                            <span><i class="fas fa-bolt"></i> Fast Charging (250kW)</span>
+                            <span><i class="fas fa-dollar-sign"></i> $0.42/kWh</span>
+                            <span><i class="fas fa-clock"></i> $0.40/min idle after 10 min</span>
+                        </div>
+                        <div class="predictive-alert">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Last report was 45 minutes ago. Be the first to check in and earn 25 points!</span>
+                        </div>
+                        <div class="station-actions">
+                            <button class="action-btn"><i class="fas fa-directions"></i> Directions</button>
+                            <button class="action-btn"><i class="fas fa-check-circle"></i> Check In</button>
+                            <button class="action-btn"><i class="fas fa-comment"></i> Report Issue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+    
+    <!-- <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>EcoCharge Hub Locator</h3>
+                    <p>Eliminating EV charging anxiety through real-time data and AI predictions.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Map</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Community Guidelines</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Download Our App</h3>
+                    <p>Get real-time notifications and access to all features on the go.</p>
+                    <div class="app-download">
+                        <button class="btn btn-primary" style="margin-top: 10px;">
+                            <i class="fab fa-apple"></i> App Store
+                        </button>
+                        <button class="btn btn-primary" style="margin-top: 10px;">
+                            <i class="fab fa-google-play"></i> Google Play
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 EcoCharge Hub Locator. All rights reserved.</p>
+            </div>
+        </div>
+    </footer> -->
+
+    <script>
+        // Simple interactivity for the demo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter buttons
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Simulate real-time status updates
+            setInterval(function() {
+                const statusElements = document.querySelectorAll('.station-status');
+                statusElements.forEach(element => {
+                    if (element.classList.contains('status-available')) {
+                        element.classList.remove('status-available');
+                        element.classList.add('status-occupied');
+                    } else if (element.classList.contains('status-occupied')) {
+                        element.classList.remove('status-occupied');
+                        element.classList.add('status-unknown');
+                    } else {
+                        element.classList.remove('status-unknown');
+                        element.classList.add('status-available');
+                    }
+                });
+            }, 10000);
+        });
+    </script>
+</body>
+</html>
